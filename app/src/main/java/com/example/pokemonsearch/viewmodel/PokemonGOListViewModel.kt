@@ -20,16 +20,13 @@ class PokemonGOListViewModel : ViewModel() {
     val observeError: LiveData<String>
         get() = error
 
-    private val repo: Repository = Repository()
-
     fun getPokemonList() {
         viewModelScope.launch(Dispatchers.IO) {
-            val retrievedData = repo.getApiPokemonGOResponse()
+            val retrievedData = Repository.getApiPokemonGOResponse()
             try {
                 if (retrievedData.isSuccessful) {
                     pokemonList.postValue(
-                        retrievedData.body()?.pokemon as List<PokemonGO>
-                    )
+                        retrievedData.body()?.pokemon as List<PokemonGO>)
                 } else {
                     error.postValue(retrievedData.code().toString())
                 }

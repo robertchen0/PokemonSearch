@@ -20,11 +20,9 @@ class PokemonListViewModel : ViewModel() {
     val observeError: LiveData<String>
         get() = error
 
-    private val repo: Repository = Repository()
-
     fun getPokemonList() {
         viewModelScope.launch(Dispatchers.IO) {
-            val retrievedData = repo.getApiPokemonResponse()
+            val retrievedData = Repository.getApiPokemonResponse()
             try {
                 if (retrievedData.isSuccessful) {
                     pokemonList.postValue(
